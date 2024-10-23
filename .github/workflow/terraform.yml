@@ -1,0 +1,27 @@
+name: Apply Terraform
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  terraform:
+    name: Deploy Infra
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform inti
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: $ {{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: $ {{ secrets.AWS_SECRET_ACCESS_KEY }}
